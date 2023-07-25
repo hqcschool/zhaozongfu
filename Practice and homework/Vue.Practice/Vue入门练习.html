@@ -5,21 +5,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="../../introduce/vue.js"></script>
 </head>
 
 <body>
-    <div id="app-2">
+    <div id="box">{{msg}} <br>
         <span v-bind:title="message">
             鼠标悬停几秒钟查看此处动态绑定的提示信息！
-        </span>
+        </span><br>
+        <input type='text' v-model="val"><br>
+        <a :href="url">百度</a>
     </div>
+
 </body>
+<script src="../../introduce/vue.js"></script>
 <script>
-    var app2 = new Vue({
-        el: '#app-2',
+    new Vue({
+        el: "#box",
         data: {
-            message: '页面加载于 ' + new Date().toLocaleString()
+            msg: "Hello",
+            message: '页面加载于 ' + new Date().toLocaleString(),
+            val: "ikun",
+            url: "http://baidu.com"
         }
     })
 </script>
