@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../introduce/vue.js"></script>
+    <script src="../../introduce/jquery.min.js"></script>
+    <style>
+        form {
+            width: 300px;
+            height: 150px;
+            background-color: aqua;
+            text-align: center;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+
+        table {
+            width: 600px;
+            height: 240px;
+            border-collapse: collapse;
+            margin: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            overflow: scroll;
+        }
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        #tableFun {
+            width: 800px;
+            height: 300px;
+            background-color: aliceblue;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #but {
+            margin: 40px;
+        }
+    </style>
+    <!-- <script src="../../introduce/vue.js"></script> -->
+</head>
+
+<body>
+
+    <div id="tableFun">
+        <button id="but" @click="jia">添加</button>
+
+        <form action="#" v-if="showfun">
+            <p>添加</p>
+            姓名 <input type="text" v-model="name" id="name"><br>
+            性别 <input type="text" v-model="sex" id="sex"><br>
+            年龄 <input type="text" v-model="year" id="year"><br>
+            <input type="submit" value="提交" @click="ti()" v-if="none">
+            <input type="submit" @click="qu()" value="取消">
+            <button @click="xiu()" id="xiu1">修改</button>
+        </form>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>年龄</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(item,index) in str " :key="index">
+                    <th>{{item.name}}</th>
+                    <th>{{item.sex}}</th>
+                    <th>{{item.year}}</th>
+                    <th>
+                        <button @click="del(index)">删除</button>
+                        <button @click="update(index)">修改</button>
+                        <button @click="put(index)">查看</button>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+<script>
+    new Vue({
+        el: "#tableFun",
+        data: {
+            showfun: false,
+            none: true,
+            str: [
+                {
+                    name: "STR",
+                    sex: "人妖",
+                    year: 37
+                },
+                {
+                    name: "GTR",
+                    sex: "车",
+                    year: "无"
+                },
+                {
+                    name: "宝马",
+                    sex: "车",
+                    year: "无"
+                },
+                {
+                    name: "zzy",
+                    sex: "人",
+                    year: 20
+                }
+            ],
+            name: "",
+            sex: "",
+            year: "",
+            thisIndex: null
+        },
+        methods: {
+
+            //显示表单
+            jia() {
+                this.showfun = true
+            },
+            //隐藏表单
+            qu() {
+                this.showfun = false
+            },
+            //添加数据
+            ti() {
+                obj = {
+
+                    name: $("#name").val(),
+                    sex: $("#sex").val(),
+                    year: $("#year").val(),
+                }
+                this.str.push(obj);
+                this.none = true,
+                    this.showfun = false
+            },
+            //删除数据
+            del(index) {
+                if (confirm('确认删除吗?')) {
+                    this.str.splice(index, 1)
+                }
+            },
+            //修改数据
+            update(index) {
+                this.index = index
+                this.none = true,
+                    this.showfun = true
+                // name.value = this.str[index].name
+                // sex.value = this.str[index].sex
+                // year.value = this.str[index].year
+                this.name = this.str[index].name
+                this.sex = this.str[index].sex
+                this.year = this.str[index].year
+            },
+            //查看数据
+            xiu() {
+                this.str[this.index].name = this.name
+                this.str[this.index].sex = this.sex
+                this.str[this.index].year = this.year
+                this.showfun = false
+            },
+            put(index) {
+                this.none = false,
+                    this.showfun = true
+                this.name = this.str[index].name
+                this.sex = this.str[index].sex
+                this.year = this.str[index].year
+            },
+
+        }
+    })
+</script>
+
+</html>

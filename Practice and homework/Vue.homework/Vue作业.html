@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #box {
+            width: 300px;
+            height: 300px;
+            margin: auto;
+            text-align: center;
+            background-image: linear-gradient(-225deg, #5D9FFF 0%, #B8DCFF 48%, #6BBBFF 100%);
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #input1 {
+            text-align: center;
+            width: 200px;
+            height: 30px;
+            font-size: 15px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border-color: aliceblue;
+            color: gray;
+        }
+
+        #input2 {
+            text-align: center;
+            width: 80px;
+            height: 30px;
+            font-size: 15px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border-color: gray;
+            color: red;
+        }
+
+        button {
+            width: 50px;
+            height: 30px;
+            background-color: azure;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        button:active {
+            background-color: gray;
+        }
+
+        span {
+            color: gray;
+        }
+
+        p {
+            color: coral;
+        }
+    </style>
+    <script src="../../introduce/vue.js"></script>
+</head>
+
+<body>
+    <div id="box">
+        <input type="text" placeholder="请输入一个数" v-model.value="Name1" id="input1"><br>
+        <input type="text" v-model="zhi" placeholder="运算符" id="input2"><br>
+        <input type="text" placeholder="请输入一个数" v-model.value="Name2" id="input1"><br>
+        <button @click="change">=</button>
+        <hr>
+        <span>结果等于: <p>{{jieguo}}</p> </span>
+    </div>
+
+</body>
+<script>
+    new Vue({
+        el: "#box",
+        data: {
+            Name1: "",
+            zhi: "",
+            Name2: "",
+            jieguo: "",
+        },
+        methods: {
+            change() {
+                if (this.zhi == "+") {
+                    this.jieguo = Number(this.Name1) + Number(this.Name2)
+                } else if (this.zhi == "-") {
+                    this.jieguo = Number(this.Name1) - Number(this.Name2)
+                }
+                else if (this.zhi == "*") {
+                    this.jieguo = Number(this.Name1) * Number(this.Name2)
+                }
+                else if (this.zhi == "/") {
+                    this.jieguo = Number(this.Name1) / Number(this.Name2)
+                }
+            }
+        }
+    })
+</script>
+
+</html>
