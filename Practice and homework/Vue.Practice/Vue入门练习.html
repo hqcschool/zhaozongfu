@@ -6,12 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-  <style>
-    *{
+<style>
+    * {
         text-decoration: none !important;
-        color: orange !important;
+
     }
-  </style>
+
+    .divs {
+        width: 300px;
+        height: 200px;
+        border: 3px solid orange;
+
+    }
+
+    .color {
+        background-color: aqua;
+    }
+
+    .color1 {
+        background-color: burlywood;
+    }
+
+    .a {
+        color: blueviolet;
+    }
+
+    .a1 {
+        color: yellow;
+    }
+</style>
+
 <body>
     <div id="box">{{msg}} <br>
         <span v-bind:title="message">
@@ -23,6 +47,16 @@
         <button @click="show">打招呼</button><br>
         <a href="http://www.baidu.com" @click="baiduU">百度</a><br>
         <a href="http://www.baidu.com" @click.prevent="baidu">百度</a><br>
+    </div>
+    <div id="app">
+        {{masg}}
+    </div>
+    <div id="css">
+        <div :class="box" :style="{display:noneStyle}">{{text}}</div>
+        <div :class="str" :style="{display:noneStyle}">{{text}}</div>
+        <div :class="obj" :style="{display:noneStyle}">{{text}}</div>
+        <button @click="change"
+            :style="{width:butWidth + 'px',height:butHeight + 'px',backgroundColor:butBackground}">{{but}}</button>
     </div>
 
 </body>
@@ -40,13 +74,76 @@
             show() {
                 alert("Hello!");
             },
-            baiduU(e){
-               e.preventDefault();
-               alert("Hello,baidui!");
+            baiduU(e) {
+                e.preventDefault();
+                alert("Hello,baidui!");
             },
-            baidu(){
+            baidu() {
                 alert("Baidu!");
             }
+        }
+    }),
+        new Vue({
+            el: '#css',
+            data: {
+                text: "希望你别像风，在我这里面掀起万翻般波澜，却又跟云去了远方",
+                but: "点击按钮切换",
+                box: "divs a color",
+                str: ["divs", "a", "color"],
+                obj: {
+                    divs: true,
+                    a: true,
+                    color: true,
+                },
+                noneStyle: "inline-block",
+                butWidth: 120,
+                butHeight: 30,
+                butBackground: "gray"
+
+            },
+            methods: {
+                change() {
+                    //字符串切换
+                    this.box = this.box === "divs a color" ? "divs a1 color1" : "divs a color";
+                    //数组切换
+                    let index = this.str.indexOf("color")
+                    if (index > -1) {
+                        this.str.splice(index, 1, "a1 color1")
+                    } else {
+                        let index = this.str.indexOf("a1 color1")
+                        this.str.splice(index, 1, "color")
+                    }
+                    //对象切换
+                    this.obj.color = !this.obj.color,
+                        this.obj.color1 = !this.obj.color1
+                        this.obj.a = !this.obj.a
+                        this.obj.a1 = !this.obj.a1
+                },
+
+            }
+
+        })
+    const vm = new Vue({
+        el: "#app",
+        data: {
+            masg: "hello Vue!"
+        },
+        methods: {},
+        computed: {},
+        /* watch: {
+            masg: {
+                handler(newValue, noNewVlaue) {
+                    console.log(newValue, noNewVlaue);  
+                }
+            },
+            immediate: true,
+        } */
+
+    })
+    vm.$watch("masg", {
+        handler(newValue, noNewVlaue) {
+            console.log("注意!!!masg进行了更改");
+            console.log("新的值为" + newValue, "旧的值为" + noNewVlaue);
         }
     })
     var number = "19";

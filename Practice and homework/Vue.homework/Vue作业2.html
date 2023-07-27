@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        th {
+            font-weight: normal;
+        }
+
+        tbody tr:hover {
+            background-color: orange !important;
+        }
+
+        .box1 {
+            background-color: green;
+        }
+    </style>
+    <script src="../../introduce/vue.js"></script>
+</head>
+<style>
+</style>
+
+<body>
+    <div id="box">
+        <form action="#">
+            <input type="text" v-model="name">
+            <select v-model="sex">
+                <option value="0">{{xingbie}}</option>
+                <option value="男">{{nan}}</option>
+                <option value="女">{{nv}}</option>
+            </select>
+            <input type="text" v-model="age">
+            <button @click="change">{{but}}</button>
+            <br>
+            <br>
+            <select>
+                <option value="0">{{xuan}}</option>
+                <option value="1">{{bian}}</option>
+                <option value="2">{{sui}}</option>
+            </select>
+
+            <select name="" id="">
+                <option value="0">{{xuan1}}</option>
+                <option value="1">{{bian1}}</option>
+                <option value="2">{{sui1}}</option>
+            </select>
+            <button>{{xu}}</button>
+        </form>
+        <br>
+
+        <table border="1" :style="{width:formW + '%'}">
+            <thead>
+                <tr>
+                    <th>{{ quan ? '取消全选' : '全选' }}<input type="checkbox" @click="toggleSelectAll"></th>
+                    <th>{{hao}}</th>
+                    <th>{{xing}}</th>
+                    <th>{{bie}}</th>
+                    <th>{{ling}}</th>
+                    <th>{{zuo}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(item,index) in str " :key="index"
+                    v-bind:style="index%2==0?'background-color:yellow':'background-color:pink'" :class="box">
+                    <th><input type="checkbox" v-model="item.checked"></th>
+                    <th>{{index}}</th>
+                    <th>{{item.name}}</th>
+                    <th>{{item.sex}}</th>
+                    <th>{{item.age}}</th>
+                    <th>
+                        <button @click="update(index)">上移</button>
+                        <button @click="put(index)">下移</button>
+                        <button @click="del(index)">删除</button>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+<script>
+    new Vue({
+        el: "#box",
+        data: {
+            name: "",
+            sex: "男",
+            age: "",
+            xingbie: "请选择一个性别",
+            nan: "男",
+            nv: "女",
+            but: "提交",
+            xuan: "选择一个排序字段",
+            bian: "编号",
+            sui: "年龄",
+            xuan1: "选择一个排序方式",
+            bian1: "升序",
+            sui1: "降序",
+            xu: "排序",
+            quan: false,
+            hao: "编号",
+            xing: "姓名",
+            bie: "性别",
+            ling: "年龄",
+            zuo: "操作",
+            formW: 100,
+            fontW: 100,
+            box:{
+             box1:false,
+            },
+            str: [
+                {
+                    checked: false,
+                    name: "小明",
+                    sex: "男",
+                    age: "11",
+                },
+                {
+                    checked: false,
+                    name: "小子",
+                    sex: "男",
+                    age: "13",
+                },
+                {
+                    checked: false,
+                    name: "小红",
+                    sex: "女",
+                    age: "15",
+                },
+
+            ],
+           
+
+        },
+        methods: {
+            change() {
+                obj = {
+                    name: this.name,
+                    sex: this.sex,
+                    age: this.age,
+                }
+                this.str.push(obj);
+                this.name = ""
+                this.sex = "男"
+                this.age = ""
+            },
+            del(index) {
+                if (confirm('确认删除吗?')) {
+                    this.str.splice(index, 1)
+                }
+            },
+            toggleSelectAll() {
+                this.quan = !this.quan;
+                this.str.forEach(item => {
+                    item.checked = this.quan;
+                    this.box.box1=true;
+                });
+            }
+        }
+
+    })
+</script>
+
+</html>
