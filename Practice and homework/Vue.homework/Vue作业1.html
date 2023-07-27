@@ -11,7 +11,8 @@
         form {
             width: 300px;
             height: 150px;
-            background-color: aqua;
+            background-color: aliceblue;
+
             text-align: center;
             box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
             border-radius: 10px;
@@ -26,12 +27,26 @@
             width: 600px;
             height: 240px;
             border-collapse: collapse;
+            color: orange;
+            border-color: orange;
             margin: auto;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             overflow: scroll;
+        }
+
+        table button {
+            width: 60px;
+            height: 30px;
+            background-color: aliceblue;
+            border: none;
+            border-radius: 5px;
+        }
+
+        table button:active {
+            background-color: gray;
         }
 
         ::-webkit-scrollbar {
@@ -41,7 +56,7 @@
         #tableFun {
             width: 800px;
             height: 300px;
-            background-color: aliceblue;
+            background: url("../../img/login.png") no-repeat 0 0/100% 100%;
             box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
             border-radius: 10px;
             position: absolute;
@@ -61,7 +76,6 @@
 
     <div id="tableFun">
         <button id="but" @click="jia">添加</button>
-
         <form action="#" v-if="showfun">
             <p>添加</p>
             姓名 <input type="text" v-model="name" id="name"><br>
@@ -69,7 +83,7 @@
             年龄 <input type="text" v-model="year" id="year"><br>
             <input type="submit" value="提交" @click="ti()" v-if="none">
             <input type="submit" @click="qu()" value="取消">
-            <button @click="xiu()" id="xiu1">修改</button>
+            <button @click="xiu()" id="xiu1" v-if="xiugai">修改</button>
         </form>
         <table border="1">
             <thead>
@@ -101,6 +115,7 @@
         data: {
             showfun: false,
             none: true,
+            xiugai: false,
             str: [
                 {
                     name: "STR",
@@ -133,6 +148,11 @@
             //显示表单
             jia() {
                 this.showfun = true
+                this.none = true,//提交按钮显示
+                    this.xiugai = false//修改隐藏
+                this.name = "",
+                    this.sex = "",
+                    this.year = ""
             },
             //隐藏表单
             qu() {
@@ -147,8 +167,6 @@
                     year: $("#year").val(),
                 }
                 this.str.push(obj);
-                this.none = true,
-                    this.showfun = false
             },
             //删除数据
             del(index) {
@@ -156,28 +174,28 @@
                     this.str.splice(index, 1)
                 }
             },
-            //修改数据
+            //数据回显
             update(index) {
                 this.index = index
-                this.none = true,
-                    this.showfun = true
-                // name.value = this.str[index].name
-                // sex.value = this.str[index].sex
-                // year.value = this.str[index].year
-                this.name = this.str[index].name
+                this.showfun = true//form显示
+                this.xiugai = true,//修改按钮显示
+                    this.none = false,//提交按钮隐藏
+                    this.name = this.str[index].name
                 this.sex = this.str[index].sex
                 this.year = this.str[index].year
             },
-            //查看数据
+            //修改数据
             xiu() {
                 this.str[this.index].name = this.name
                 this.str[this.index].sex = this.sex
                 this.str[this.index].year = this.year
                 this.showfun = false
             },
+            //查看数据
             put(index) {
                 this.none = false,
-                    this.showfun = true
+                    this.showfun = true,
+                    this.xiugai = false
                 this.name = this.str[index].name
                 this.sex = this.str[index].sex
                 this.year = this.str[index].year
