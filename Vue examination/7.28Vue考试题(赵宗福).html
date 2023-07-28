@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7.28Vue考试题</title>
+    <style>
+        body {
+            background-color: aliceblue;
+
+        }
+
+        * {
+            text-decoration: none;
+        }
+
+        #on-box {
+            width: 781px;
+            height: 500px;
+            margin: auto;
+        }
+
+        #on-box div {
+            display: inline-block;
+            margin-top: 5px;
+            width: 150px;
+            height: 220px;
+            margin-left: 3.1px;
+            margin-right: 3.1px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #on-box div img {
+            position: relative;
+            top: 10px;
+            left: 15px;
+        }
+
+        #on-box div a {
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+        }
+
+        #on-box div p {
+            position: relative;
+            left: 15px;
+            font-size: 10px;
+            height: 30px;
+            color: gray;
+            max-width: 80%;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            /* 指定显示的行数 */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        #on-box div p #span {
+            width: 60px;
+            height: 25px;
+            background-color: red;
+            color: black;
+            border-radius: 2px;
+        }
+
+        #on-box div p #span1 {
+            width: 60px;
+            height: 25px;
+            background-color: rgba(255, 234, 0, 0.432);
+            color: gray;
+            border-radius: 2px;
+        }
+
+        #on-box div p #span2 {
+            width: 60px;
+            height: 25px;
+            background-color: rgb(38, 150, 38);
+            color: #fff;
+            border-radius: 2px;
+        }
+
+        #on-box div h4 {
+            position: relative;
+            top: -10px;
+            left: 12px;
+            color: red;
+        }
+
+        #up-box {
+            width: 781px;
+            height: 400px;
+            border: 1px solid gray;
+            margin: auto;
+            overflow: scroll;
+        }
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        .open {
+            width: 100%;
+            height: 40px;
+            border-bottom: 1px solid gray;
+        }
+
+        .open span {
+            display: block;
+            padding-left: 10px;
+            color: #DB327F;
+            width: 140px;
+            height: 98%;
+            line-height: 40px;
+            border-bottom: 2px solid #DB327F;
+        }
+
+        table {
+            margin-top: 20px;
+            width: 100%;
+            height: 140px;
+
+        }
+
+        tbody span {
+            position: relative;
+            left: 15px;
+            font-size: 10px;
+            height: 30px;
+            color: gray;
+            width: 200px;
+            overflow: hidden;
+            display: inline-block;
+
+        }
+
+        tbody th {
+            width: 200px;
+            height: 40px;
+        }
+
+        #th {
+            width: 450px !important;
+        }
+
+        #txt {
+            display: inline;
+        }
+
+        #footer {
+            position: relative;
+            top: 10px;
+            width: 781px;
+            height: 150px;
+            border: 1px solid gray;
+            margin: auto;
+        }
+
+        #footer p{
+            position: relative;
+            top: -45px;
+            left: 630px;
+            font-size: 10px;
+        }
+        #footer span{
+            position: relative;
+            top: -45px;
+            left: 620px;
+            font-size: 10px;
+        }
+
+        .xia {
+
+            width: 100%;
+            height: 60px;
+            background-color: rgb(238, 236, 236);
+            position: absolute;
+            bottom: 0;
+
+            /* 调整负边距的值以适应具体情况 */
+        }
+
+        .xia a {
+            display: block;
+            width: 150px;
+            height: 100%;
+            background-color: #DB327F;
+
+            float: right;
+            text-align: center;
+            color: #fff;
+            line-height: 60px;
+        }
+
+        select {
+            width: 120px;
+            height: 30px;
+            color: #DB327F;
+            border-color: #DB327F;
+            margin: 10px;
+        }
+    </style>
+    <script src="../introduce/vue.js"></script>
+</head>
+
+<body>
+    <div id="div">
+        <div id="on-box">
+            <div v-for="(item,index) in str" :key="index" @dblclick="tian(index)">
+                <a href="#">
+                    <img :src="item.img" width="80%" height="60%">
+                    <p><span id="span">{{item.span}}</span> <span id="span1">{{item.span1}}</span> <span
+                            id="span2">{{item.span2}}</span>{{item.text}}</p>
+                    <h4>{{item.mon}} </h4>
+                </a>
+            </div>
+
+        </div>
+        <div id="up-box">
+            <div class="open">
+                <span>{{Te}}</span>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>{{shang}}</th>
+                        <th>{{dan}}</th>
+                        <th>{{shu}}</th>
+                        <th>{{zuo}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(item,index) in list" :key="index">
+                        <th id="th"><input type="checkbox"><img :src="item.img" width="100px"
+                                height="40px"><span>{{item.text}}</span></th>
+                        <th style="color: #DB327F;">{{item.mon}}</th>
+                        <th><button @click="add(index)">+</button>
+                            <div id="txt">{{item.num}}</div>
+                            <button @click="reduce(index)">-</button>
+                        </th>
+                        <th>
+                            <button @click="del(index)">删除</button>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="footer">
+            <select name="" id="">
+                <option value="">使用优惠卷</option>
+                <option value="">满20减5</option>
+                <option value="">满20减10</option>
+            </select>
+            <p id="Select">共<b style="color: #DB327F;">1</b>件商品</p>
+            <span id="amount">总金额(未含运费): <b style="color: #DB327F;">￥3003.00</b></span>
+            <div class="xia">
+                <a href="">立即结算</a>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    new Vue({
+        el: "#div",
+        data: {
+            str: [
+                {
+                    span1: '精选',
+                    img: "https://img10.360buyimg.com/jdcms/s300x300_jfs/t1/173927/19/34775/49948/641a994fFcfff04ee/656974bb96fc70f0.jpg.webp",
+                    text: "志趣家智能奶油风带锁床头柜实木简约现代卧室多功能柜子ins风轻 三色灯+无线充电+usb插排+锁+音 整装",
+                    mon: "￥1831.60",
+                    num: 1,
+                },
+                {
+                    span: "自营",
+                    img: "https://img12.360buyimg.com/jdcms/s300x300_jfs/t1/122289/11/31468/130166/641a9ce7F35c96874/f7512da5f27cb08a.jpg.webp",
+                    text: "志趣家客厅茶水柜茶边柜极简轻奢餐边柜靠墙厨房置物柜酒柜Q2栣 轻奢金-梦驼铃190-3--长190宽40",
+                    mon: "￥1800.80",
+                    num: 1,
+                },
+                {
+                    span2: "新品",
+                    img: "https://img10.360buyimg.com/jdcms/s300x300_jfs/t1/198222/2/33283/97176/643cd68bF160a4b6e/f8dc105e62407aaa.jpg.webp",
+                    text: "合夕沙发客厅简现代单双人出租房懒人沙发床两用小户型布艺沙发S3 譺米白单人加大加厚款",
+                    mon: "￥200",
+                    num: 1,
+                },
+                {
+                    span1: '精选',
+                    img: "https://img20.360buyimg.com/jdcms/s300x300_jfs/t1/175991/32/36858/158779/64546a23F5e66cf0e/e4522336b866e215.jpg.webp",
+                    text: "博星娜羽绒被夏被95白鹅绒春秋被全棉空调被芯夏季单双人盖被酒店被子 灰色双拼 150x200cm 3斤",
+                    mon: "￥89.00",
+                    num: 1,
+                },
+                {
+                    span1: '精选',
+                    img: "https://img10.360buyimg.com/jdcms/s300x300_jfs/t1/36453/18/22024/70230/641b2626F205e4b7e/da2baf1b336129d7.jpg.webp",
+                    text: "合夕沙发床两用可折叠客厅双人1.5米小户型多功能科技布推拉床无 1.0米海绵款【外径1.08M】无储物 1.5米-1.8米",
+                    mon: "￥3002.00",
+                    num: 1,
+                },
+                {
+                    span2: "新品",
+                    img: "https://img12.360buyimg.com/jdcms/s300x300_jfs/t1/219589/25/27433/39317/641a9c75F887c22a6/efc2085a88f87334.jpg.webp",
+                    text: "志趣家实木五斗柜简约现代卧室储物柜家用客厅收纳柜轻奢黑白整装R2菪",
+                    mon: "￥1154.00",
+                    num: 1,
+                },
+                {
+                    span1: '精选',
+                    img: "https://img30.360buyimg.com/jdcms/s300x300_jfs/t1/68792/6/24056/91477/641b27fbF3cdec914/aa160bcea398a1ce.jpg.webp",
+                    text: "志趣家北欧电视柜茶几组合黑色原木色可伸缩电视机柜现代简约小户 圆角短款(胡+白木纹)电视柜 整装",
+                    mon: "￥2474.00",
+                    num: 1,
+                },
+                {
+                    span: "自营",
+                    img: "https://img11.360buyimg.com/jdcms/s300x300_jfs/t1/164665/22/34075/179418/641a9928F20579877/95459bf051c0068f.jpg.webp",
+                    text: "志趣家实木床头柜轻奢法式奶油风小型超窄夹缝20cm迷你现代简约床 其他颜色定制 请联系客服 整装 x 35x40x50cm",
+                    mon: "￥819.60",
+                    num: 1,
+                },
+                {
+                    span2: "新品",
+                    img: "https://img10.360buyimg.com/jdcms/s300x300_jfs/t1/186580/29/35134/86391/64c33875Fd3e4df28/e22ab3d25fcfca98.jpg.webp",
+                    text: "叶芝 岩板电视柜茶几组合客厅储物电视机柜现代简约电视柜 2.4米岩板电视柜",
+                    mon: "￥2839.00",
+                    num: 1,
+                },
+                {
+                    span: "自营",
+                    img: "https://img14.360buyimg.com/jdcms/s300x300_jfs/t1/185202/6/35769/114392/64c1d93aF51bec416/a48b430510cebff5.jpg.webp",
+                    text: "健匠 沙发床 北欧实木沙发床两用简约小户型客厅多功能推拉折叠沙发 2.1米升级款【复古棕海绵座包】",
+                    mon: "￥5959.00",
+                    num: 1,
+
+                },
+            ],
+            list: [
+                {
+
+                    img: "https://img10.360buyimg.com/jdcms/s300x300_jfs/t1/173927/19/34775/49948/641a994fFcfff04ee/656974bb96fc70f0.jpg.webp",
+                    text: "志趣家智能奶油风带锁床头柜实木简约现代卧室多功能柜子ins风轻 三色灯+无线充电+usb插排+锁+音 整装",
+                    mon: "￥1831.60",
+                    num: 1,
+                },
+                {
+                    img: "https://img12.360buyimg.com/jdcms/s300x300_jfs/t1/122289/11/31468/130166/641a9ce7F35c96874/f7512da5f27cb08a.jpg.webp",
+                    text: "志趣家客厅茶水柜茶边柜极简轻奢餐边柜靠墙厨房置物柜酒柜Q2栣 轻奢金-梦驼铃190-3--长190宽40",
+                    mon: "￥1800.80",
+                    num: 1,
+                },
+            ],
+            Te: "特卖商品",
+            shang: "商品",
+            dan: "单价",
+            shu: "数量",
+            zuo: "操作",
+
+        },
+        methods: {
+            //添加
+            tian(index) {
+                event.preventDefault();
+                let key = {
+                    img: this.str[index].img,
+                    text: this.str[index].text,
+                    mon: this.str[index].mon,
+                    num: this.str[index].num,
+                }
+                const isAdded = this.list.find(item => item.text === key.text)
+                if (isAdded) {
+                    this.list[index].num++
+                } else {
+                    this.list.push(key);
+                }
+
+            },
+            //删除
+            del(index) {
+                if (confirm('确认删除吗?')) {
+                    this.list.splice(index, 1)
+                }
+            },
+            //+-商品
+            add(index) {
+                this.list[index].num++;
+            },
+            //商品不能少于一个
+            reduce(index) {
+                if (this.list[index].num == 1) {
+                    confirm("至少选择一件商品");
+                    return;
+                }
+                this.list[index].num--;
+            },
+        }
+    })
+</script>
+
+</html>
