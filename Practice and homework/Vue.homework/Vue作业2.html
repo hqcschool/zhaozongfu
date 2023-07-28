@@ -10,6 +10,11 @@
             font-weight: normal;
         }
 
+        th {
+            width: 200px;
+            height: 30px;
+        }
+
         tbody tr:hover {
             background-color: orange !important;
         }
@@ -56,7 +61,7 @@
         </form>
         <br>
 
-        <table border="1" :style="{width:formW + '%'}">
+        <table border="1">
             <thead>
                 <tr>
                     <th>{{ quan ? '取消全选' : '全选' }}<input type="checkbox" @click="toggleSelectAll"></th>
@@ -68,16 +73,16 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(item,index) in str " :key="index" v-bind:class="index%2==0?'a':'a1'"
+                <tr v-for="(item,index) in str " :key="index" :class="index%2==0?'a':'a1'"
                     :style="box ?'background-color:green':''">
                     <th><input type="checkbox" v-model="item.checked"></th>
-                    <th>{{index}}</th>
+                    <th>{{item.id}}</th>
                     <th>{{item.name}}</th>
                     <th>{{item.sex}}</th>
                     <th>{{item.age}}</th>
                     <th>
-                        <button @click="update(index)">上移</button>
-                        <button @click="put(index)">下移</button>
+                        <button @click="up(index)">上移</button>
+                        <button @click="down(index)">下移</button>
                         <button @click="del(index)">删除</button>
                     </th>
                 </tr>
@@ -116,18 +121,21 @@
             str: [
                 {
                     checked: false,
+                    id:1,
                     name: "小明",
                     sex: "男",
                     age: "11",
                 },
                 {
                     checked: false,
+                    id:2,
                     name: "小子",
                     sex: "男",
                     age: "13",
                 },
                 {
                     checked: false,
+                    id:3,
                     name: "小红",
                     sex: "女",
                     age: "15",
@@ -138,9 +146,11 @@
 
         },
         methods: {
+            //添加
             change() {
                 event.preventDefault();
                 obj = {
+                    id:this.str.length > 0 ? this.str[this.str.length - 1].id + 1 : 1,
                     name: this.name,
                     sex: this.sex,
                     age: this.age,
@@ -150,18 +160,32 @@
                 this.sex = "男"
                 this.age = ""
             },
+            //删除
             del(index) {
                 if (confirm('确认删除吗?')) {
                     this.str.splice(index, 1)
                 }
             },
+            //全选
             toggleSelectAll() {
                 this.quan = !this.quan;
                 this.box = !this.box;
                 this.str.forEach(item => {
                     item.checked = this.quan;
-                    
+
                 });
+            },
+            //上移
+            up(index) {
+                if (index == 0) { }
+                else {
+                    let item = this.str
+                    item.splice(index - 1, 1, ...item.splice(index, 1, item[index - 1]));
+                }
+            },
+            down(index) {
+                let item = this.str
+                item.splice(index, 1, ...item.splice(index + 1, 1, item[index]))
             }
         }
 
