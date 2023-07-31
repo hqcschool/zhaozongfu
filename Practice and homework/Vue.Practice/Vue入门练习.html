@@ -47,6 +47,56 @@
         <button @click="show">打招呼</button><br>
         <a href="http://www.baidu.com" @click="baiduU">百度</a><br>
         <a href="http://www.baidu.com" @click.prevent="baidu">百度</a><br>
+        <!-- v-text 指令 -->
+        <div>你好,{{name}}</div>
+        <div v-text="name"></div>
+        <div v-text="str"></div>
+        <!-- v-html 指令 -->
+        <div>你好,{{name}}</div>
+        <div v-html="name"></div>
+        <div v-html="str"></div>
+        <!-- v-once 指令 -->
+        <h2 v-once>初始化的n值是: {{n}}</h2>
+        <h2>当前的n值是: {{n}}</h2>
+        <button @click="n++">点我n+1</button>
+        <!-- v-pre 指令 -->
+        <h2 v-pre>Vue其实很简单</h2>
+        <h2>当前的n值是:{{n}}</h2>
+        <button @click="n++">点我n+1</button>
+        <!-- <p v-add10="abc">{{123}}</p> -->
+        <h2 v-if="a">你好啊</h2>
+        <h2 :style="{opacity}">我是一个逐渐消失的字</h2>
+        <h2 v-text="n"></h2>
+        <h2>当前的n值是：{{ n }}</h2>
+        <button @click="add">点我n+1</button>
+        <button @click="bye">点我销毁vm</button>
+        <form @submit.prevent="demo">
+            账号：<input type="text" v-model.trim="userInfo.account"> <br /><br />
+            密码：<input type="password" v-model="userInfo.password"> <br /><br />
+            年龄：<input type="number" v-model.number="userInfo.age"> <br /><br />
+            性别：
+            男<input type="radio" name="sex" v-model="userInfo.sex" value="male">
+            女<input type="radio" name="sex" v-model="userInfo.sex" value="female"> <br /><br />
+            爱好：
+            学习<input type="checkbox" v-model="userInfo.hobby" value="study">
+            打游戏<input type="checkbox" v-model="userInfo.hobby" value="game">
+            吃饭<input type="checkbox" v-model="userInfo.hobby" value="eat">
+            <br /><br />
+            所属校区
+            <select v-model="userInfo.city">
+                <option value="">请选择校区</option>
+                <option value="beijing">北京</option>
+                <option value="shanghai">上海</option>
+                <option value="shenzhen">深圳</option>
+                <option value="wuhan">成都</option>
+            </select>
+            <br /><br />
+            其他信息：
+            <textarea v-model.lazy="userInfo.other"></textarea> <br /><br />
+            <input type="checkbox" v-model="userInfo.agree">阅读并接受
+            <a href="https://www.yuque.com/cessstudy">《用户协议》</a>
+            <button>提交</button>
+        </form>
     </div>
     <div id="app">
         {{masg}}
@@ -68,7 +118,23 @@
             msg: "Hello",
             message: '页面加载于 ' + new Date().toLocaleString(),
             val: "ikun",
-            url: "http://baidu.com"
+            url: "http://baidu.com",
+            name: "老六行为",
+            str: '<h1>马可波罗</h1>',
+            n: 1,
+            abc: "123",
+            a: false,
+            opacity: 1,
+            userInfo: {
+                account: '',
+                password: '',
+                age: 18,
+                sex: 'female',
+                hobby: [],
+                city: 'beijing',
+                other: '',
+                agree: ''
+            }
         },
         methods: {
             show() {
@@ -80,8 +146,45 @@
             },
             baidu() {
                 alert("Baidu!");
+            },
+            add() {
+                console.log('add')
+                this.n++
+            },
+            bye() {
+                console.log('bye')
+                this.$destroy()
+            },
+            demo() {
+                console.log(JSON.stringify(this.userInfo))
             }
-        }
+        },
+        watch: {
+            n() {
+                console.log('n变了')
+            }
+        },
+       /*  beforeCreate() { console.log('beforeCreate') },
+        created() { console.log('created') },
+        beforeMount() { console.log('beforeMount') },
+        mounted() { console.log('mounted') },
+        beforeUpdate() { console.log('beforeUpdate') },
+        updated() { console.log('updated') },
+        beforeDestroy() { console.log('beforeDestroy') },
+        destroyed() { console.log('destroyed') }, */
+       /*  directives: {
+            add10(el, binding) {
+                console.log(el, binding);
+                el.innerHTML = binding.value * 10;
+            },
+        }, */
+        mounted() {
+            console.log("mounted", this);
+            setInterval(() => {
+                this.opacity -= 0.01;
+                if (this.opacity <= 0) this.opacity = 1;
+            }, 16);
+        },
     }),
         new Vue({
             el: '#css',
@@ -116,8 +219,8 @@
                     //对象切换
                     this.obj.color = !this.obj.color,
                         this.obj.color1 = !this.obj.color1
-                        this.obj.a = !this.obj.a
-                        this.obj.a1 = !this.obj.a1
+                    this.obj.a = !this.obj.a
+                    this.obj.a1 = !this.obj.a1
                 },
 
             }
