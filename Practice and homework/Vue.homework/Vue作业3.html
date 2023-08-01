@@ -154,8 +154,8 @@
             <div class="xia" v-if="nonebr">
                 <span><span id="num">{{npm}}</span>item left</span>
                 <a href="#" id="searchAll" @click="all">All</a>
-                <a href="#" id="searchactive">chactive</a>
-                <a href="#" id="completed">completed</a>
+                <a href="#" id="searchactive" @click="wwc">chactive</a>
+                <a href="#" id="completed" @click="wc">completed</a>
                 <a href="#" id="clearcompleted" v-if="condition" @click="deleteSelected">clear completed</a>
             </div>
         </div>
@@ -175,7 +175,6 @@
             logo: "todos",
             boxStyle: "width:550px; height:130px ;margin:auto ;text-align:center ;color:#e7a8a8 ;font-family:Helvetica Neue ;font-size:100px ;font-weight:500 ;margin-top:-75px ;line-height:130px",
             str: [],//添加列表
-            arr: [],
             nonebr: false,
             allSelected: false,
             condition: false,
@@ -217,9 +216,9 @@
             shanchu(index) {
                 event.preventDefault();
                 this.str.splice(index, 1);
-                // console.log(this.npm--);
+                console.log(this.npm--);
                 if (this.npm === 0) {
-                    // this.nonebr = false
+                    this.nonebr = false
                     this.inp = false
                 }
                 localStorage.setItem('todoList', JSON.stringify(this.str))
@@ -261,7 +260,25 @@
             },
             //所有
             all() {
-
+                this.str = JSON.parse(localStorage.getItem("todoList"));
+            },
+            // 完成
+            wc() {
+                let m = JSON.parse(localStorage.getItem("todoList"));
+                let am = m.filter((item) => {
+                    return item.selected == true;
+                });
+                console.log(am);
+                this.str = am;
+            },
+            //未完成
+            wwc() {
+                let sm = JSON.parse(localStorage.getItem("todoList"));
+                let sam = sm.filter((item) => {
+                    return item.selected == false;
+                });
+                console.log(sam);
+                this.str = sam;
             },
             deleteSelected() {
                 this.str = this.str.filter(item => !item.selected);
