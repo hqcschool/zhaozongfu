@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../introduce/vue.js"></script>
+</head>
+<style>
+    * {
+        text-decoration: none;
+        list-style: none;
+    }
+
+    #bodyCss {
+        background-color: #F5F5F5
+    }
+
+    .text {
+        position: relative;
+        width: 550px;
+        background-color: #fff;
+        margin: auto;
+    }
+
+    .text .qq1 {
+        width: 503px;
+        height: 66px;
+        line-height: 66px;
+        font-size: 24px;
+        padding-left: 45px;
+        display: inline-block;
+        font-weight: 300;
+        box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.5);
+        color: #4d4d4d;
+        border: none;
+    }
+
+    input:focus {
+        outline: none;
+    }
+
+    #footer {
+
+        width: 550px;
+
+    }
+
+    #footer li {
+        position: relative;
+        left: -40px;
+        width: 550px;
+        border-bottom: 1px solid #EDEDED;
+        font-size: 24px;
+        color: #4d4d4d;
+    }
+
+    #footer li a {
+        float: right;
+        position: relative;
+        left: -15px;
+        color: red;
+    }
+
+    .xia {
+        margin-top: -15px;
+        width: 550px;
+        height: 32px;
+        line-height: 32px;
+        box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .xia span,
+    .xia a {
+        margin-left: 13px;
+        margin-right: 13px;
+        color: #777777;
+    }
+
+    .xia a:hover {
+        border: 1px solid #e7a8a8;
+    }
+
+    .icon {
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        left: 1px;
+        top: 15px;
+    }
+
+    .inp {
+        width: 30px;
+        height: 30px;
+        position: relative;
+        top: 6px;
+    }
+
+    .for {
+        width: 550px;
+        height: 80px;
+        line-height: 40px;
+        text-align: center;
+        margin: auto;
+    }
+
+    .for p {
+        color: #bfbfbf;
+        height: 10px;
+        font-size: 10px;
+    }
+
+    .for p a {
+        color: #bfbfbf;
+    }
+
+    .for p a:hover {
+        border-bottom: 1px solid #bfbfbf;
+    }
+
+    .selected {
+        color: #bfbfbf;
+        text-decoration: line-through;
+    }
+
+    .b {
+        color: #000000;
+        text-decoration: none;
+    }
+</style>
+
+<body id="bodyCss">
+    <div id="div">
+        <div id="box" :style="boxStyle">
+            <p>{{logo}}</p>
+        </div>
+
+        <div class="text">
+            <input type="checkbox" class="icon" @click="toggleSelectAll" v-model="allSelected" v-if="inp">
+            <input type="text" placeholder="What needs to be done?" @keyup.enter="add" v-model="name" class="qq1">
+
+            <div id="footer">
+                <ul id="memo-list">
+                    <li v-for="(item,index) in str">
+                        <p><input class="inp" type="checkbox" v-model="item.selected" @change="gai">
+                            <label for="" :class="item.selected?'selected':''">{{item.name}}</label>
+                            <a href="#" @click="shanchu(index)">❌︎</a>
+                        </p>
+                    </li>
+                </ul>
+
+            </div>
+            <div class="xia" v-if="nonebr">
+                <span><span id="num">{{npm}}</span>item left</span>
+                <a href="#" id="searchAll" @click="all">All</a>
+                <a href="#" id="searchactive">chactive</a>
+                <a href="#" id="completed">completed</a>
+                <a href="#" id="clearcompleted" v-if="condition" @click="deleteSelected">clear completed</a>
+            </div>
+        </div>
+        <div class="for">
+            <p>Double-click to edit a todo</p>
+            <p>Written by <a href="#">Evan You</a></p>
+            <p>Part of <a href="#">TodoMVC</a></p>
+        </div>
+    </div>
+</body>
+<script>
+    new Vue({
+        el: "#div",
+        data: {
+            name: "",
+            npm: 0,
+            logo: "todos",
+            boxStyle: "width:550px; height:130px ;margin:auto ;text-align:center ;color:#e7a8a8 ;font-family:Helvetica Neue ;font-size:100px ;font-weight:500 ;margin-top:-75px ;line-height:130px",
+            str: [],//添加列表
+            arr: [],
+            nonebr: false,
+            allSelected: false,
+            condition: false,
+            inp: false,
+            selected: false,
+            check: false,
+
+        },
+        mounted() {
+            // 获取本地存储的数据
+            const savedData = localStorage.getItem('todoList');
+            if (savedData) {
+                this.str = JSON.parse(savedData);
+                this.npm = this.str.length;
+                this.nonebr = this.npm > 0;
+                this.inp = this.npm > 0;
+            }
+        },
+        methods: {
+            //添加
+            add() {
+                if (this.name === "") {
+                    return;
+                } else {
+                    this.str.push({
+                        name: this.name,
+                        check: false,
+                    })
+                    this.nonebr = true
+                    this.iconn = true
+                    this.inp = true
+                }
+
+                this.name = "";
+                this.npm++
+                localStorage.setItem('todoList', JSON.stringify(this.str))
+            },
+            //删除
+            shanchu(index) {
+                event.preventDefault();
+                this.str.splice(index, 1);
+                // console.log(this.npm--);
+                if (this.npm === 0) {
+                    // this.nonebr = false
+                    this.inp = false
+                }
+                localStorage.setItem('todoList', JSON.stringify(this.str))
+
+            },
+            //全选
+            toggleSelectAll() {
+
+                this.selected = !this.selected;
+                this.condition = !this.allSelected,
+                    this.str.forEach(item => {
+                        item.selected = !this.allSelected;
+                    });
+                if (this.selected) {
+                    this.npm = 0
+                } else {
+                    this.npm = this.str.length
+                }
+                localStorage.setItem('todoList', JSON.stringify(this.str))
+            },
+
+            //反选
+            gai() {
+                let a1 = this.str.length
+                // this.allSelected = this.str.every(item => item.selected);
+                this.str.filter((item) => {
+                    item.selected
+                    if (item.selected) {
+                        a1--
+                    }
+                    if (a1 == 0) {
+                        this.selected = true
+                    } else {
+                        this.selected = false
+                    }
+                })
+                this.npm = a1
+                localStorage.setItem('todoList', JSON.stringify(this.str))
+            },
+            //所有
+            all() {
+
+            },
+            deleteSelected() {
+                this.str = this.str.filter(item => !item.selected);
+                this.nonebr = false
+                this.inp = false
+                localStorage.setItem('todoList', JSON.stringify(this.str))
+            }
+        },
+    })
+</script>
+
+</html>
