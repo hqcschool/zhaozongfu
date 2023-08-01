@@ -196,7 +196,7 @@
         methods: {
             //添加
             add() {
-                if (this.name === "") {
+                if (this.name === "" || !this.name.trim()) {
                     return;
                 } else {
                     this.str.push({
@@ -207,7 +207,6 @@
                     this.iconn = true
                     this.inp = true
                 }
-
                 this.name = "";
                 this.npm++
                 localStorage.setItem('todoList', JSON.stringify(this.str))
