@@ -233,13 +233,12 @@
                         item.selected = !this.allSelected;
                     });
                 if (this.selected) {
-                    this.npm = 0
+                    this.npm = 1
                 } else {
                     this.npm = this.str.length
                 }
                 localStorage.setItem('todoList', JSON.stringify(this.str))
             },
-
             //反选
             gai() {
                 let a1 = this.str.length
@@ -280,6 +279,7 @@
                 console.log(sam);
                 this.str = sam;
             },
+            //批量删除
             deleteSelected() {
                 this.str = this.str.filter(item => !item.selected);
                 this.nonebr = false
