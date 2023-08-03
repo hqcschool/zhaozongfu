@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../introduce/vue.js"></script>
+</head>
+
+<body>
+    <div id="box">
+        <school></school>
+        <hr/>
+        <docu></docu>
+    </div>
+    <script>
+        const school = {
+            template: `
+             <div>
+                 <h1>所属学校:{{sch}}</h1>
+                 <h3>地址:{{dip}}</h3>
+                 <button @click="fun">详细地址</button>
+            </div>
+            `,
+            data() {
+                return {
+                    sch: "北京大学",
+                    dip: "北京",
+                }
+            },
+            methods: {
+                fun() {
+                    alert("在北京就完了")
+                }
+            }
+
+
+        }
+        const docu = Vue.extend({
+            template: `
+             <div>
+                 <p>你是谁:{{name}}</p>
+                 <p>哪来的:{{font}}</p>
+            </div>
+            `,
+            data() {
+                return {
+                    name: "张亮",
+                    font: "张亮麻辣烫",
+                }
+            },
+
+
+        })
+        const vm = new Vue({
+            el: "#box",
+            components: {
+                docu: docu,
+                school,
+            }
+        })
+    </script>
+</body>
+
+</html>
