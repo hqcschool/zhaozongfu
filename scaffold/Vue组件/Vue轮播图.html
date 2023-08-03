@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../../introduce/vue.js"></script>
+    <link rel="stylesheet" href="../../introduce/swiper.min.css">
+    <script src="../../introduce/swiper.min.js"></script>
+</head>
+<link rel="stylesheet" href="./Vue轮播.css">
+<body>
+    <div id="box">
+        <swipe class="swiper"></swipe>
+    </div>
+    <script src="../../introduce/vue.js"></script>
+    <script>
+        const swipe = {
+            template: `
+            <div class="swiper-container">
+              <div class="swiper-wrapper">
+                 <div class="swiper-slide"><img src="https://picsum.photos/300/400" alt=""></div>
+                 <div class="swiper-slide"><img src="https://picsum.photos/300/400" alt=""></div>
+                 <div class="swiper-slide"><img src="https://picsum.photos/300/400" alt=""></div>
+                 <div class="swiper-slide"><img src="https://picsum.photos/300/400" alt=""></div>
+                 <div class="swiper-slide"><img src="https://picsum.photos/300/400" alt=""></div>
+                 <div class="swiper-slide"><img src="https://picsum.photos/300/400" alt=""></div>
+                 <div class="swiper-slide"><img src="https://picsum.photos/300/400" alt=""></div>
+                 <div class="swiper-slide"><img src="https://picsum.photos/300/400" alt=""></div>
+                 <div class="swiper-slide"><img src="https://picsum.photos/300/400" alt=""></div>
+                 <div class="swiper-slide"><img src="https://picsum.photos/300/400" alt=""></div>
+              </div>
+                <div class="swiper-pagination"></div>
+            </div>
+            `,
+        }
+        const vm = new Vue({
+            el: "#box",
+            components: {
+                swipe,
+            },
+            data:{
+                
+            }
+        })
+        var swiper = new Swiper('.swiper-container', {
+            slidesPerView: 3,
+            spaceBetween: 30,
+            centeredSlides: true,
+            loop: true,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+        });
+    </script>
+</body>
+
+</html>
